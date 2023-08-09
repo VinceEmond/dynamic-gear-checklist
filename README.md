@@ -12,5 +12,4 @@ An app designed to streamline the process of creating a dynamic checklist requir
 
 ### Screenshots
 
-![App Screenshot](/public/Shine-99-GearChecklist.png)
-![App Screenshot](/public/Shine-99-Gear-Checklist-2.png)
+![App Screenshot](/public/Shine-99-Gear-Checklist.png) ![App Screenshot](/public/Shine-99-Gear-Checklist-2.png)
