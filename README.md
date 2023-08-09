@@ -1,4 +1,4 @@
-# dynamic-gear-checklist
+# Dynamic Gear Checklist
 
 ### Summary
 
