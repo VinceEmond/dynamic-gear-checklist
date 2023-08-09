@@ -7,13 +7,27 @@
       body {
         font-family: Arial, sans-serif;
         margin: 0;
+        font-size: small;
         padding: 20px;
         background-color: #f4f4f4;
       }
 
-      h1,
+      h1 {
+        text-align: center;
+        color: #343434;
+      }
+
       h2 {
         margin-bottom: 10px;
+        font-size: medium;
+      }
+
+      .job-types-container {
+        background-color: #dfdfdf;
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
 
       .job-types label {
@@ -62,6 +76,19 @@
         padding: 0;
       }
 
+      .truck-container {
+        background-color: rgba(244, 204, 204, 255);
+      }
+      .required-container {
+        background-color: rgba(252, 229, 205, 255);
+      }
+      .sometimes-container {
+        background-color: rgba(253, 241, 204, 255);
+      }
+      .rarely-container {
+        background-color: rgba(217, 234, 210, 255);
+      }
+
       #sometimes-list {
         list-style-type: none;
         padding: 0;
@@ -77,15 +104,16 @@
       }
 
       .footer {
+        margin: 15px;
         font-size: smaller;
       }
     </style>
-    <title>Gear Load-Out Checklist</title>
+    <title>Shine 99 Gear Checklist</title>
   </head>
   <body>
-    <h1>Gear Load-Out Checklist</h1>
-    <div class="job-types">
-      <h2>Select Job Types:</h2>
+    <h1>Shine 99 Gear Checklist</h1>
+    <div class="job-types job-types-container">
+      <h2>Select Today's Job(s):</h2>
       <label
         ><input
           type="checkbox"
@@ -138,19 +166,19 @@
       >
     </div>
     <button id="generate-btn">Generate</button>
-    <div class="result">
+    <div class="result truck-container">
       <h2>Truck:</h2>
       <ul id="truck-list"></ul>
     </div>
-    <div class="result">
+    <div class="result required-container">
       <h2>Required:</h2>
       <ul id="required-list"></ul>
     </div>
-    <div class="result">
+    <div class="result sometimes-container">
       <h2>Sometimes Required:</h2>
       <ul id="sometimes-list"></ul>
     </div>
-    <div class="result">
+    <div class="result rarely-container">
       <h2>Rarely Required:</h2>
       <ul id="rarely-list"></ul>
     </div>
@@ -268,8 +296,8 @@
               'Ladder Rubber Bumpers',
               'Cougar Paws - Shoes',
               'Cougar Paws - Replacement Grips',
-              'Hose Nossle (Small)',
-              'Hose Nosle (Extended)',
+              'Hose Nozzle (Small)',
+              'Hose Nozzle (Extended)',
               'Hose Y Splitter',
               'Industrial Garbage Bags',
               'Jumper Cables',
@@ -304,7 +332,7 @@
                   'Liquid Hammer',
                   'Rubber Gloves (For Chemicals)',
                   'Respirator (For Chemicals)',
-                  'Mini Vacuum (for window sill)',
+                  'Mini Vacum (for window sill)',
                   'Bike Brushes (for window sill)',
                 ],
               },
