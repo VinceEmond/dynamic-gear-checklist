@@ -160,6 +160,7 @@
           checkboxes.forEach(function (checkbox) {
             const jobType = checkbox.value;
             const gearItems = getGearListForJobType(jobType);
+            console.log('🚀 ~ gearItems:', gearItems);
 
             gearItems.forEach(function (item) {
               const listItem = document.createElement('li');
@@ -173,29 +174,61 @@
               label.appendChild(document.createTextNode(item));
               listItem.appendChild(label);
 
-              if (jobType === 'Truck') {
-                truckList.appendChild(listItem);
-              } else if (jobType === 'Interior Window Cleaning - Traditional') {
+              // if (jobType === 'Truck') {
+              //   truckList.appendChild(listItem);
+              // } else {
+              const gearCategory = jobType.split(' - ')[1]; // Extract gear category
+              console.log('🚀 ~ jobType:', jobType);
+              console.log('🚀 ~ gearCategory:', gearCategory);
+
+              if (gearCategory === 'Required') {
                 gearList.appendChild(listItem);
-              } else if (jobType === 'Exterior Window Cleaning - Traditional') {
+              } else if (gearCategory === 'Sometimes Required') {
                 sometimesRequiredList.appendChild(listItem);
-              } else if (jobType === 'Gutter (Downspout Flush Only)') {
+              } else if (gearCategory === 'Rarely Required') {
                 rarelyRequiredList.appendChild(listItem);
               }
+              // }
               // Add similar conditions for other job types
             });
           });
         });
 
         function getGearListForJobType(jobType) {
-          // You can populate this function with the actual gear lists for each job type
-          // For now, let's return some dummy data
-          return [
-            'Safety harness',
-            'Window cleaning solution',
-            'Squeegee',
-            // Add more gear items here
-          ];
+          const gearCategories = {
+            'Interior Window Cleaning - Traditional - Required': [
+              'Washer Bucket (Yellow)',
+              'Dish Soap Bottle',
+              'Glide (Liquid)',
+              'Rags (Clean)',
+              'Ettore Squeegee - Track',
+              'Ettore Squeegee - Handle',
+              'Ettore Squeegee - Rubbers',
+              'Holster',
+              'Holster Clip (for Tool Belt)',
+              'Tool Belt',
+              'Step Ladders',
+            ],
+            'Interior Window Cleaning - Traditional - Sometimes Required': [
+              'Steel Wool',
+              'Walnut Pads',
+              'Unger Scraper',
+              'Spare Scraper Blades',
+              'Extension Ladders',
+            ],
+            'Interior Window Cleaning - Traditional - Rarely Required': [
+              'Plastic Scraper',
+              'Goof Off',
+              'Liquid Hammer',
+              'Rubber Gloves (For Chemicals)',
+              'Respirator (For Chemicals)',
+              'Mini Vacuum (for window sill)',
+              'Bike Brushes (for window sill)',
+            ],
+            // Add other job types and their gear categories here
+          };
+
+          return gearCategories[jobType] ? gearCategories[jobType] : [];
         }
       });
     </script>
