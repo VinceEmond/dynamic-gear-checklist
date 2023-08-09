@@ -12,4 +12,7 @@ An app designed to streamline the process of creating a dynamic checklist requir
 
 ### Screenshots
 
-![App Screenshot](/public/Shine-99-Gear-Checklist.png) ![App Screenshot](/public/Shine-99-Gear-Checklist-2.png)
+<p align="middle" float="left">
+  <img align="top" src="https://github.com/VinceEmond/dynamic-gear-checklist/blob/main/public/Shine-99-Gear-Checklist.png?raw=true" width="40%" />
+  <img src="https://github.com/VinceEmond/dynamic-gear-checklist/raw/main/public/Shine-99-Gear-Checklist-2.png" width="40%" />
+</p>
