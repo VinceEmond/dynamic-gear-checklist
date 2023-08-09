@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+
+      h1,
+      h2 {
+        margin-bottom: 10px;
+      }
+
+      .job-types label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .job-types input[type='checkbox'] {
+        margin-right: 5px;
+      }
+
+      #generate-btn {
+        margin-top: 10px;
+        background-color: #4d574d;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      #generate-btn:hover {
+        background-color: #3c443c;
+      }
+
+      .result {
+        margin-top: 20px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .result h2 {
+        margin-bottom: 10px;
+      }
+
+      #truck-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      #required-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      #sometimes-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      #rarely-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .gear-item {
+        margin-bottom: 5px;
+      }
+    </style>
+    <title>Gear Load-Out Checklist</title>
+  </head>
+  <body>
+    <h1>Gear Load-Out Checklist</h1>
+    <div class="job-types">
+      <h2>Select Job Types:</h2>
+      <label
+        ><input
+          type="checkbox"
+          value="Interior Window Cleaning - Traditional"
+        />Interior Window Cleaning - Traditional</label
+      >
+      <label
+        ><input
+          type="checkbox"
+          value="Interior Window Cleaning - Traditional Post Construction"
+        />Interior Window Cleaning - Traditional Post Construction</label
+      >
+      <label
+        ><input
+          type="checkbox"
+          value="Exterior Window Cleaning - Traditional"
+        />Exterior Window Cleaning - Traditional</label
+      >
+      <label
+        ><input
+          type="checkbox"
+          value="Exterior Window Cleaning - Traditional Post Construction"
+        />Exterior Window Cleaning - Traditional Post Construction</label
+      >
+      <label
+        ><input
+          type="checkbox"
+          value="Exterior Window Cleaning - Waterfed Pole"
+        />Exterior Window Cleaning - Waterfed Pole</label
+      >
+      <label
+        ><input type="checkbox" value="Gutter (Downspout Flush Only)" />Gutter
+        (Downspout Flush Only)</label
+      >
+      <label
+        ><input type="checkbox" value="Gutter Clean (Inside)" />Gutter Clean
+        (Inside)</label
+      >
+      <label
+        ><input type="checkbox" value="Gutter Shine (Exterior)" />Gutter Shine
+        (Exterior)</label
+      >
+      <label><input type="checkbox" value="House Wash" />House Wash</label>
+      <label
+        ><input type="checkbox" value="Roof Cleaning" />Roof Cleaning</label
+      >
+      <label
+        ><input type="checkbox" value="Surface Clean (Pressure Wash)" />Surface
+        Clean (Pressure Wash)</label
+      >
+    </div>
+    <button id="generate-btn">Generate</button>
+    <div class="result">
+      <h2>Truck:</h2>
+      <ul id="truck-list"></ul>
+    </div>
+    <div class="result">
+      <h2>Required:</h2>
+      <ul id="required-list"></ul>
+    </div>
+    <div class="result">
+      <h2>Sometimes Required:</h2>
+      <ul id="sometimes-list"></ul>
+    </div>
+    <div class="result">
+      <h2>Rarely Required:</h2>
+      <ul id="rarely-list"></ul>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const generateButton = document.getElementById('generate-btn');
+        const truckList = document.getElementById('truck-list');
+        const requiredList = document.getElementById('required-list');
+        const sometimesList = document.getElementById('sometimes-list');
+        const rarelyList = document.getElementById('rarely-list');
+
+        generateButton.addEventListener('click', function () {
+          requiredList.innerHTML = ''; // Clear previous results
+          sometimesList.innerHTML = ''; // Clear previous results
+          rarelyList.innerHTML = ''; // Clear previous results
+          truckList.innerHTML = ''; // Clear previous results
+
+          const checkedBoxes = document.querySelectorAll(
+            '.job-types input[type=checkbox]:checked'
+          );
+
+          // Populate Truck List
+          const truckGearItems = getGearListForJobType('truck');
+          truckGearItems.forEach(function (item) {
+            const listItem = createListItem(item);
+            truckList.appendChild(listItem);
+          });
+
+          // Populate Other Lists
+          checkedBoxes.forEach(function (checkbox) {
+            const jobType = checkbox.value;
+            const gearItems = getGearListForJobType(jobType);
+
+            gearItems.required.forEach(function (item) {
+              const listItem = createListItem(item);
+              requiredList.appendChild(listItem);
+            });
+            gearItems.sometimesRequired.forEach(function (item) {
+              const listItem = createListItem(item);
+              sometimesList.appendChild(listItem);
+            });
+            gearItems.rarelyRequired.forEach(function (item) {
+              const listItem = createListItem(item);
+              rarelyList.appendChild(listItem);
+            });
+          });
+        });
+
+        function createListItem(item) {
+          const listItem = document.createElement('li');
+          listItem.className = 'gear-item';
+
+          const label = document.createElement('label');
+          const input = document.createElement('input');
+          input.type = 'checkbox';
+
+          label.appendChild(input);
+          label.appendChild(document.createTextNode(item));
+          listItem.appendChild(label);
+          return listItem;
+        }
+
+        function getGearListForJobType(jobType) {
+          const gearListData = {
+            truck: [
+              'Water Testing Tool',
+              'Tool Box',
+              'Parts Box',
+              'Millwauke Drill',
+              'Millwauke Drill Bits',
+              'Stanley Sockets',
+              'Ladder Supports',
+              'Ladder Rubber Bumpers',
+              'Cougar Paws - Shoes',
+              'Cougar Paws - Replacement Grips',
+              'Hose Nossle (Small)',
+              'Hose Nosle (Extended)',
+              'Hose Y Splitter',
+              'Industrial Garbage Bags',
+              'Jumper Cables',
+              'Extension Cord (For Pump)',
+              'Moss Brush - Replacement Heads',
+            ],
+            jobTypes: {
+              'Interior Window Cleaning - Traditional': {
+                required: [
+                  'Washer Bucket (Yellow)',
+                  'Dish Soap Bottle',
+                  'Glide (Liquid)',
+                  'Rags (Clean)',
+                  'Ettore Squeegee - Track',
+                  'Ettore Squeegee - Handle',
+                  'Ettore Squeegee - Rubbers',
+                  'Holster',
+                  'Holster Clip (for Tool Belt)',
+                  'Tool Belt',
+                  'Step Ladders',
+                ],
+                sometimesRequired: [
+                  'Steel Wool',
+                  'Walnut Pads',
+                  'Unger Scraper',
+                  'Spare Scraper Blades',
+                  'Extension Ladders',
+                ],
+                rarelyRequired: [
+                  'Plastic Scraper',
+                  'Goof Off',
+                  'Liquid Hammer',
+                  'Rubber Gloves (For Chemicals)',
+                  'Respirator (For Chemicals)',
+                  'Mini Vacuum (for window sill)',
+                  'Bike Brushes (for window sill)',
+                ],
+              },
+              'Interior Window Cleaning - Traditional Post Construction': {
+                required: [
+                  'Washer Bucket (Yellow)',
+                  'Dish Soap Bottle',
+                  'Glide (Liquid)',
+                  'Rags (Clean)',
+                  'Ettore Squeegee - Track',
+                  'Ettore Squeegee - Handle',
+                  'Ettore Squeegee - Rubbers',
+                  'Holster',
+                  'Holster Clip (for Tool Belt)',
+                  'Tool Belt',
+                  'Steel Wool',
+                  'Walnut Pads',
+                  'Unger Scraper',
+                  'Spare Scraper Blades',
+                  'Plastic Scraper',
+                  'Goof Off',
+                  'Rubber Gloves (For Chemicals)',
+                  'Respirator (For Chemicals)',
+                  'Mini Vacum (for window sill)',
+                  'Bike Brushes (for window sill)',
+                  'Step Ladders',
+                ],
+                sometimesRequired: ['Liquid Hammer', 'Extension Ladders'],
+                rarelyRequired: [],
+              },
+            },
+          };
+
+          if (jobType == 'truck') {
+            return gearListData.truck;
+          }
+
+          return gearListData.jobTypes[jobType]
+            ? gearListData.jobTypes[jobType]
+            : [];
+        }
+      });
+    </script>
+  </body>
+</html>
