@@ -21,6 +21,10 @@
         margin-bottom: 10px;
         font-size: medium;
       }
+      h3 {
+        font-size: small;
+        margin: 3px;
+      }
 
       .job-types-container {
         background-color: #dfdfdf;
@@ -39,19 +43,26 @@
         margin-right: 5px;
       }
 
-      #generate-btn {
+      .btn {
         margin-top: 10px;
         background-color: #4d574d;
         color: #fff;
         border: none;
         border-radius: 4px;
         padding: 10px 20px;
+        margin: 4px;
         font-size: 14px;
         cursor: pointer;
       }
 
-      #generate-btn:hover {
-        background-color: #3c443c;
+      .btn:hover {
+        filter: brightness(115%);
+      }
+
+      .buttons-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
       }
 
       .result {
@@ -76,6 +87,11 @@
         padding: 0;
       }
 
+      .cleaning-group {
+        margin: 5px;
+        padding: 2px;
+      }
+
       .truck-container {
         background-color: rgba(244, 204, 204, 255);
       }
@@ -87,6 +103,11 @@
       }
       .rarely-container {
         background-color: rgba(217, 234, 210, 255);
+      }
+
+      #generate-btn {
+        background-color: #2d80fd;
+        color: #fff;
       }
 
       #sometimes-list {
@@ -106,6 +127,8 @@
       .footer {
         margin: 15px;
         font-size: smaller;
+        display: flex;
+        justify-content: center;
       }
     </style>
     <title>Shine 99 Gear Checklist</title>
@@ -113,59 +136,82 @@
   <body>
     <h1>Shine 99 Gear Checklist</h1>
     <div class="job-types job-types-container">
-      <h2>Select Today's Job(s):</h2>
-      <label
-        ><input
-          type="checkbox"
-          value="Interior Window Cleaning - Traditional"
-        />Interior Window Cleaning - Traditional</label
-      >
-      <label
-        ><input
-          type="checkbox"
-          value="Interior Window Cleaning - Traditional Post Construction"
-        />Interior Window Cleaning - Traditional Post Construction</label
-      >
-      <label
-        ><input
-          type="checkbox"
-          value="Exterior Window Cleaning - Traditional"
-        />Exterior Window Cleaning - Traditional</label
-      >
-      <label
-        ><input
-          type="checkbox"
-          value="Exterior Window Cleaning - Traditional Post Construction"
-        />Exterior Window Cleaning - Traditional Post Construction</label
-      >
-      <label
-        ><input
-          type="checkbox"
-          value="Exterior Window Cleaning - Waterfed Pole"
-        />Exterior Window Cleaning - Waterfed Pole</label
-      >
-      <label
-        ><input type="checkbox" value="Gutter (Downspout Flush Only)" />Gutter
-        (Downspout Flush Only)</label
-      >
-      <label
-        ><input type="checkbox" value="Gutter Clean (Inside)" />Gutter Clean
-        (Inside)</label
-      >
-      <label
-        ><input type="checkbox" value="Gutter Shine (Exterior)" />Gutter Shine
-        (Exterior)</label
-      >
-      <label><input type="checkbox" value="House Wash" />House Wash</label>
-      <label
-        ><input type="checkbox" value="Roof Cleaning" />Roof Cleaning</label
-      >
-      <label
-        ><input type="checkbox" value="Surface Clean (Pressure Wash)" />Surface
-        Clean (Pressure Wash)</label
-      >
+      <h2>Select Today's Job(s)</h2>
+
+      <div class="cleaning-group">
+        <h3>Interior Window Cleaning:</h3>
+        <label
+          ><input
+            type="checkbox"
+            value="Interior Window Cleaning - Traditional"
+          />Traditional</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            value="Interior Window Cleaning - Traditional Post Construction"
+          />Traditional (Post Construction)</label
+        >
+      </div>
+
+      <div class="cleaning-group">
+        <h3>Exterior Window Cleaning:</h3>
+        <label
+          ><input
+            type="checkbox"
+            value="Exterior Window Cleaning - Traditional"
+          />Traditional</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            value="Exterior Window Cleaning - Traditional Post Construction"
+          />Traditional (Post Construction)</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            value="Exterior Window Cleaning - Waterfed Pole"
+          />Waterfed Pole</label
+        >
+      </div>
+
+      <div class="cleaning-group">
+        <h3>Gutter Cleaning:</h3>
+        <label
+          ><input type="checkbox" value="Gutter Clean (Inside)" />Gutter Clean
+          (Inside)</label
+        >
+        <label
+          ><input type="checkbox" value="Gutter Shine (Exterior)" />Gutter Shine
+          (Exterior)</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            value="Gutter (Downspout Flush Only)"
+          />Downspout Flush Only</label
+        >
+      </div>
+
+      <div class="cleaning-group">
+        <h3>Other:</h3>
+        <label><input type="checkbox" value="House Wash" />House Wash</label>
+        <label
+          ><input type="checkbox" value="Roof Cleaning" />Roof Cleaning</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            value="Surface Clean (Pressure Wash)"
+          />Surface Clean (Pressure Wash)</label
+        >
+      </div>
     </div>
-    <button id="generate-btn">Generate</button>
+    <div class="buttons-container">
+      <button class="btn" id="generate-btn">Generate</button>
+      <button class="btn" id="reset-btn">Reset</button>
+    </div>
     <div class="result truck-container">
       <h2>Truck:</h2>
       <ul id="truck-list"></ul>
@@ -182,14 +228,40 @@
       <h2>Rarely Required:</h2>
       <ul id="rarely-list"></ul>
     </div>
-    <div class="footer">Created by Vince Emond (Version: 23.08.08)</div>
+    <div class="footer">
+      <p>
+        Created by
+        <a href="https://github.com/VinceEmond" target="”_blank”"
+          >Vince Emond</a
+        >
+        (Version: 23.08.08)
+      </p>
+    </div>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         const generateButton = document.getElementById('generate-btn');
+        const resetButton = document.getElementById('reset-btn');
         const truckList = document.getElementById('truck-list');
         const requiredList = document.getElementById('required-list');
         const sometimesList = document.getElementById('sometimes-list');
         const rarelyList = document.getElementById('rarely-list');
+
+        resetButton.addEventListener('click', function () {
+          // Clear previous results
+          requiredList.innerHTML = '';
+          sometimesList.innerHTML = '';
+          rarelyList.innerHTML = '';
+          truckList.innerHTML = '';
+
+          const checkedBoxes = document.querySelectorAll(
+            '.job-types input[type=checkbox]:checked'
+          );
+
+          // Un-Check All Job(s)
+          checkedBoxes.forEach((e) => {
+            e.checked = false;
+          });
+        });
 
         generateButton.addEventListener('click', function () {
           requiredList.innerHTML = ''; // Clear previous results
@@ -396,6 +468,86 @@
                   'Respirator (For Chemicals)',
                   'Mini Vacum (for window sill)',
                   'Bike Brushes (for window sill)',
+                ],
+              },
+              'Exterior Window Cleaning - Traditional Post Construction': {
+                required: [
+                  'Washer Bucket (Yellow)',
+                  'Dish Soap Bottle',
+                  'Glide (Liquid)',
+                  'Rags (Clean)',
+                  'Ettore Squeegee - Track',
+                  'Ettore Squeegee - Handle',
+                  'Ettore Squeegee - Rubbers',
+                  'Holster',
+                  'Holster Clip (for Tool Belt)',
+                  'Tool Belt',
+                  'Steel Wool',
+                  'Walnut Pads',
+                  'Unger Scraper',
+                  'Spare Scraper Blades',
+                  'Plastic Scraper',
+                  'Goof Off',
+                  'Liquid Hammer',
+                  'Rubber Gloves (For Chemicals)',
+                  'Respirator (For Chemicals)',
+                  'Mini Vacum (for window sill)',
+                  'Bike Brushes (for window sill)',
+                  'Extension Ladders',
+                  'Step Ladders',
+                ],
+
+                sometimesRequired: [
+                  'Fall Protection (Body Harness)',
+                  'Thick Rope to Tie off',
+                  'Rope Ascender',
+                  'Pitch Hopper Roof Wedges',
+                ],
+
+                rarelyRequired: [],
+              },
+              'Exterior Window Cleaning - Waterfed Pole': {
+                required: [
+                  'Washer Bucket (Yellow)',
+                  'Dish Soap Bottle',
+                  'Glide (Liquid)',
+                  'Rags (Clean)',
+                  'Ettore Squeegee - Track',
+                  'Ettore Squeegee - Handle',
+                  'Ettore Squeegee - Rubbers',
+                  'Holster',
+                  'Holster Clip (for Tool Belt)',
+                  'Tool Belt',
+                  'Waterfed Pole',
+                  'Waterfed Pole - XL Extension',
+                  'WFP Brush Head (Boar Hair)',
+                  'WFP Brush Head (Regular)',
+                  'WFP Brush Head (Gutter Brush)',
+                  'WFP Pole Tubing',
+                  'Water Filter - 3 Step',
+                  'Water Filter - 1 Step (Resin)',
+                  'Hoses (Regular Thickness)',
+                ],
+                sometimesRequired: [
+                  'Steel Wool',
+                  'Walnut Pads',
+                  'Unger Scraper',
+                  'Spare Scraper Blades',
+                  'Extension Ladders',
+                  'Hoses (Lightweight Thickness)',
+                ],
+                rarelyRequired: [
+                  'Fall Protection (Body Harness)',
+                  'Thick Rope to Tie off',
+                  'Rope Ascender',
+                  'Pitch Hopper Roof Wedges',
+                  'Plastic Scraper',
+                  'Goof Off',
+                  'Liquid Hammer',
+                  'Rubber Gloves (For Chemicals)',
+                  'Respirator (For Chemicals)',
+                  'Step Ladders',
+                  '2 to 1 Hose Pressure Hack',
                 ],
               },
             },
